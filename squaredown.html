@@ -81,9 +81,6 @@ Press 1, 2, 3 to pick a color (red, green, blue) and draw with mouse. Press arro
 var mode = "squares";
 var canvas = document.getElementById("canvas");
 
-
-//import { cubes_from_list, Convex, HP } from "./PL.js";
-
 var f_maxheight = 40; // this corresponds to value 1, if it matters
 var f_y = 100; // height where f_y is drawn on canvas
 
@@ -102,12 +99,6 @@ var zoom = 1;
 var f_graph = [[-100, 100, 1]];
 
 var type = 2;
-
-for (var i = 1; i < 40; i++) {
-	//f_graph.push([i, i+1-i*0.02]);
-	//f_graph.push([i, i + Math.random()]);
-}
-
 
 
 var downed = null;
@@ -164,12 +155,7 @@ function mousedown(event) {
 function fromscreen2(x, y) {
 	let height = (y - f_y);
 	let xx = fromscreen([x, f_y]);
-	//console.log(height, "mus-");
-	//console.log(height, xx, f_maxheight, cell_size, );
-	//console.log("fromscreen2 from", x, y, "to", xx - height*f_maxheight/cell_size, xx + height*f_maxheight/cell_size);
-	return [xx[0] - height/cell_size /*f_maxheight*/, xx[0] + height/cell_size /*/f_maxheight*/];
-	//return [xx[0] - 1, xx[0] + 1];
-	
+	return [xx[0] - height/cell_size /*f_maxheight*/, xx[0] + height/cell_size /*/f_maxheight*/];	
 }
 
 function getMousePos(canvas, evt) {
@@ -536,7 +522,6 @@ function zeroesdraw() {
 		}
 	}
 	
-	//console.log(integrals);
 	
 	// now integrals[i+buff] is the integral over ith pixel.
 	// let's next calculate integral over x-y...x+y into inte[x, y]
@@ -585,20 +570,8 @@ function zeroesdraw() {
 				if (Math.abs(diff[0]) < 0.1) r = 1;
 				if (Math.abs(diff[1]) < 0.1) g = 1;
 				if (Math.abs(diff[2]) < 0.1) b = 1;
-				
-				//if (y == 30 && x == 130) console.log(diff, Math.abs(diff[0]), Math.abs(diff[0]) < 20, r);
-				
-			}
 			
-			/*else if (mode == "largest") {
-				
-				if (diff[0] >= diff[1] && diff[0] >= diff[2]) r = 1;
-				else if (diff[1] > diff[2]) g = 1;
-				else b = 1;
-				
-				//if (y == 30 && x == 130) console.log(diff, Math.abs(diff[0]), Math.abs(diff[0]) < 20, r);
-
-			}*/
+			}
 			else if (mode == "slanted") {
 				if (diff[0] >= -0.01) r = 1;
 				if (diff[1] >= -0.01) g = 1;
@@ -614,31 +587,8 @@ function zeroesdraw() {
 	
 	// Draw the buffer onto the canvas in one go
 	ctx.putImageData(imageData, 0, 0);
-	
-	
-	//ctx.fillStyle = "#FFFFFF";
-	//ctx.fillRect(0, 0, canvas2.width, canvas2.height);
-	
-	//drawpolygon(ctx2, [[0, 0], [600, 0], [600,600], [0, 600]], [255, 255, 255]);
-		
-	
 }
 
-
-// converts a point from param space to under real line
-// note that this is not an inverse of fromscreen2 since internally in PL different repr is used
-function toscreen2(pt) {
-	// from PL representation (endpoints of first interval in cube)
-	// to center point of cube
-	let center = pt[0].valueOf() + (pt[1].valueOf() - pt[0].valueOf());
-	
-	let height = (pt[1].valueOf() - pt[0].valueOf());
-	return toscreen([center, height]);
-}
-
-function yinvert(t) {
-	return [t[0], -t[1]];
-}
 
 Array.prototype.insert = function ( index, ...items ) {
     this.splice( index, 0, ...items );
@@ -654,35 +604,11 @@ function presso(e) {
 		}
 		
 	}
-	/*if (e.code == "KeyP") {
-		projective = !projective;
-	}*/
 }
 
-function unpresso(e) {
-	/*if (e.code == "KeyS") {
-		pressed = false;
-	}*/
-	
-}
 
-//drawit();
 canvas.addEventListener("keydown", presso);
 canvas.addEventListener("keyup", unpresso);
-//canvas.onmousedown(mousedown);
-//canvas.onmousedown(mouse);
-
-
-
-
-//let c = new Convex([new HP([1, 0], 0), new HP([-1, 0], -0), new HP([0, 1], 1), new HP([0, -1], -1)], false);
-//console.log(c.str());
-//a = bbb
-//let zz1 = []; //[new Convex(new HP([-1, 1], 1))];	
-//let zz2 = []; //new Convex(new HP([-2, 1], 1))];
-//let a = cubes_from_list([]);
-//let zz3 = [];
-
 
 
 
